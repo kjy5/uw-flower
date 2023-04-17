@@ -16,11 +16,6 @@ on:
         default: false
         type: boolean
 
-# Load environment variables
-env:
-  VITE_PROJECT_URL: ${{ secrets.VITE_PROJECT_URL }}
-  VITE_PUBLIC_KEY: ${{ secrets.VITE_PUBLIC_KEY }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
