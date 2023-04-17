@@ -11,8 +11,12 @@ canvas {
     height: 100%;
 }
 
-#water {
-    width: 100%;
+#controls {
+    display: flex;
+    gap: 0.5rem;
+}
+button {
+    flex-grow: 1;
     height: 5rem;
 
     font-size: 3rem;

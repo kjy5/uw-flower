@@ -95,7 +95,18 @@ app.ticker.add(() => {
     overPetals.forEach(petal => petal.alpha = healthLevel);
 });
 
+// Health functions
+function updateHealth() {
+    healthLevel = Math.max(0, Math.min(1, healthLevel));
+}
+
+// Add button actions
 document.getElementById('water')?.addEventListener('click', () => {
     healthLevel += .01;
-    healthLevel = Math.min(1, healthLevel);
+    updateHealth();
+});
+
+document.getElementById('fire')?.addEventListener('click', () => {
+    healthLevel -= .01;
+    updateHealth();
 });
