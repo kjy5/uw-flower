@@ -17,7 +17,7 @@ let healthBar = new Graphics();
 healthBar.beginFill(BLUE_COLOR);
 healthBar.drawRect(0, 0, window.innerWidth * healthLevel, 30);
 
-// Dimentions and locations
+// Dimensions and locations
 const centerX = window.innerWidth / 2;
 const centerY = window.innerHeight * .3;
 
