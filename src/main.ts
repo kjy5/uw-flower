@@ -5,18 +5,47 @@ import {
     CENTER_X,
     CENTER_Y,
     GRAPHIC_HEIGHT,
-    GREEN_COLOR, LIGHT_BLUE_COLOR,
+    GREEN_COLOR,
+    LIGHT_BLUE_COLOR,
     LIGHT_RED_COLOR,
     PETAL_HEIGHT,
     PETAL_WIDTH,
+    PROJECT_URL,
+    PUBLIC_KEY,
     PURPLE_COLOR,
     RED_COLOR,
-    STEM_WIDTH, WHITE_COLOR,
+    STEM_WIDTH,
+    WHITE_COLOR,
     WIDTH
 } from "./constants";
+import {createClient} from "@supabase/supabase-js";
 
 // Properties
 let healthLevel = .5;
+
+// Setup Supabase connection
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY);
+
+// Initialize health
+supabase.from('Flowers').select('health').eq('name', 'Quad').then(({data, error}) => {
+    if (error || !data) {
+        console.error(error);
+    } else {
+        healthLevel = data[0].health;
+    }
+});
+
+// Subscribe to health updates
+supabase.channel('any').on('postgres_changes', {
+    event: 'UPDATE',
+    schema: 'public',
+    table: 'Flowers',
+    filter: 'name=eq.Quad'
+}, (payload) => {
+    healthLevel = payload.new.health;
+    updateHealth(true);
+    console.log("Updating health to: " + healthLevel);
+}).subscribe()
 
 
 // Create app
@@ -48,7 +77,7 @@ let overPetals: Graphics[] = [];
 for (let i = 0; i < 10; i++) {
     // Setup look
     let petal = new Graphics();
-    petal.beginFill(i< 5 ? PURPLE_COLOR : LIGHT_RED_COLOR);
+    petal.beginFill(i < 5 ? PURPLE_COLOR : LIGHT_RED_COLOR);
     petal.pivot.set(0, -PETAL_HEIGHT);
     petal.position.set(CENTER_X, CENTER_Y);
     petal.drawEllipse(0, 0, PETAL_WIDTH, PETAL_HEIGHT);
@@ -60,6 +89,7 @@ for (let i = 0; i < 10; i++) {
         petal.eventMode = 'static';
         petal.on('pointerdown', () => {
             healthLevel -= .01;
+            updateHealth();
         });
 
         overPetals.push(petal);
@@ -96,8 +126,17 @@ app.ticker.add(() => {
 });
 
 // Health functions
-function updateHealth() {
+function updateHealth(fromServer: boolean = false) {
     healthLevel = Math.max(0, Math.min(1, healthLevel));
+
+    if (!fromServer) {
+        // Update database
+        supabase.from('Flowers').update({health: healthLevel}).eq('name', 'Quad').then((result) => {
+            if (result.error) {
+                console.error(result.error);
+            }
+        });
+    }
 }
 
 // Add button actions

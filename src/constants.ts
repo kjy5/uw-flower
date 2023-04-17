@@ -21,3 +21,7 @@ export const CENTER_RADIUS = 50;
 
 export const PETAL_WIDTH = 50;
 export const PETAL_HEIGHT = 80;
+
+// Database keys
+export const PROJECT_URL = import.meta.env.VITE_PROJECT_URL;
+export const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;

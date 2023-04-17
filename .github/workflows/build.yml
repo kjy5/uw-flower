@@ -36,6 +36,9 @@ jobs:
         run: |
           npm i
           npm run build
+        env:
+          VITE_PROJECT_URL: ${{ secrets.VITE_PROJECT_URL }}
+          VITE_PUBLIC_KEY: ${{ secrets.VITE_PUBLIC_KEY }}
 
       # Upload artifact if requested
       - name: ⬆️ Upload artifact
