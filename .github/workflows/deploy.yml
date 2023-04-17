@@ -28,8 +28,6 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       upload-artifact: true
-      VITE_PROJECT_URL: ${{ secrets.VITE_PROJECT_URL }}
-      VITE_PUBLIC_KEY: ${{ secrets.VITE_PUBLIC_KEY }}
 
   # Deploy the website after building
   deploy:
