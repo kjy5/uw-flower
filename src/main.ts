@@ -24,7 +24,6 @@ import {createClient} from "@supabase/supabase-js";
 let healthLevel = .5;
 
 // Setup Supabase connection
-console.log(PROJECT_URL);
 const supabase = createClient(PROJECT_URL, PUBLIC_KEY);
 
 // Initialize health
