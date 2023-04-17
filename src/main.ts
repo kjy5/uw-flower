@@ -56,7 +56,12 @@ petals.forEach(petal => app.stage.addChild(petal));
 app.stage.addChild(flowerCenter);
 
 // Set update loop
-// let elapsed = 0;
-// app.ticker.add((delta) => {
-//     elapsed += delta;
-// });
+app.ticker.add(() => {
+    // Update health bar
+    healthBar.width = window.innerWidth * healthLevel;
+});
+
+document.getElementById('water')?.addEventListener('click', () => {
+    healthLevel += .01;
+    healthLevel = Math.min(1, healthLevel);
+});
