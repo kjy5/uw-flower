@@ -1,18 +1,17 @@
 import '../styles/style.css'
 import {Application, Graphics} from "pixi.js";
 import {
-    BLUE_COLOR,
     CENTER_RADIUS,
     CENTER_X,
     CENTER_Y,
     GRAPHIC_HEIGHT,
-    GREEN_COLOR,
+    GREEN_COLOR, LIGHT_BLUE_COLOR,
     LIGHT_RED_COLOR,
     PETAL_HEIGHT,
     PETAL_WIDTH,
     PURPLE_COLOR,
     RED_COLOR,
-    STEM_WIDTH,
+    STEM_WIDTH, WHITE_COLOR,
     WIDTH
 } from "./constants";
 
@@ -24,13 +23,13 @@ let healthLevel = .5;
 let app = new Application<HTMLCanvasElement>({
     width: WIDTH,
     height: GRAPHIC_HEIGHT,
-    backgroundColor: 0xffffff
+    backgroundColor: WHITE_COLOR
 });
 document.getElementById('graphics')?.appendChild(app.view);
 
 // Create health bar
 let healthBar = new Graphics();
-healthBar.beginFill(BLUE_COLOR);
+healthBar.beginFill(WHITE_COLOR);
 healthBar.drawRect(0, 0, window.innerWidth * healthLevel, 30);
 
 // Create stem
@@ -82,6 +81,17 @@ app.stage.addChild(flowerCenter);
 app.ticker.add(() => {
     // Update health bar
     healthBar.width = window.innerWidth * healthLevel;
+    if (healthLevel < .25) {
+        healthBar.tint = LIGHT_RED_COLOR;
+    } else if (healthLevel < .5) {
+        healthBar.tint = RED_COLOR;
+    } else if (healthLevel < .75) {
+        healthBar.tint = LIGHT_BLUE_COLOR;
+    } else {
+        healthBar.tint = GREEN_COLOR;
+    }
+
+    // Update petal alpha
     overPetals.forEach(petal => petal.alpha = healthLevel);
 });
 

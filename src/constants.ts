@@ -2,11 +2,12 @@
 export const PURPLE_COLOR = '#774FB0';
 export const LIGHT_PURPLE_COLOR = '#9272C0';
 export const RED_COLOR = '#B0774F';
-export const LIGHT_RED_COLOR = '#C09272';
+export const LIGHT_RED_COLOR = '#DFC8B8';
 export const GREEN_COLOR = '#4FB077';
 export const LIGHT_GREEN_COLOR = '#72C092';
 export const BLUE_COLOR = '#4FB0A7';
 export const LIGHT_BLUE_COLOR = '#72C0B9';
+export const WHITE_COLOR = '#FFFFFF';
 
 // Locations
 export const CENTER_X = window.innerWidth / 2;
